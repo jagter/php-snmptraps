@@ -167,7 +167,7 @@ class Snmp_read_MIB {
             if ($handle = opendir($this->mib_directory)) {
                 $out = array();
                 while (false !== ($entry = readdir($handle))) {
-                    if (strpos($entry, ".txt")!==false || strpos($entry, ".my")!==false || strpos($entry, ".mib")!==false) {
+                    if (strpos($entry, ".txt")!==false || strpos($entry, ".my")!==false || strpos($entry, ".mib")!==false || strpos($entry, "-MIB")!==false) {
                         $out[] = $entry;
                     }
                 }
@@ -202,6 +202,7 @@ class Snmp_read_MIB {
         if (file_exists($this->mib_directory.$this->mib_file.".my"))      { $this->mib_file_name = $this->mib_directory.$this->mib_file.".my"; }
         elseif (file_exists($this->mib_directory.$this->mib_file.".txt")) { $this->mib_file_name = $this->mib_directory.$this->mib_file.".txt"; }
         elseif (file_exists($this->mib_directory.$this->mib_file.".mib")) { $this->mib_file_name = $this->mib_directory.$this->mib_file.".mib"; }
+        elseif (file_exists($this->mib_directory.$this->mib_file."-MIB")) { $this->mib_file_name = $this->mib_directory.$this->mib_file."-MIB"; }
         else                                                              { return false; }
     }
 
@@ -214,8 +215,8 @@ class Snmp_read_MIB {
      */
     public function read_mib_file ($filename=false) {
         if($filename!==false)   { $this->mib_file_name = $filename; }
-        // we only allow .txt and .my
-        if (strpos($this->mib_file_name, ".txt")!==false || strpos($this->mib_file_name, ".my")!==false || strpos($this->mib_file_name, ".mib")!==false) {
+        // we only allow .txt, .my and -MIB
+        if (strpos($this->mib_file_name, ".txt")!==false || strpos($this->mib_file_name, ".my")!==false || strpos($this->mib_file_name, ".mib")!==false || strpos($entry, "-MIB")!==false){
             // read file and put it to array
             $file_h = fopen($this->mib_file_name,"r");
             if (filesize($this->mib_file_name)>0) {
@@ -234,8 +235,8 @@ class Snmp_read_MIB {
 
     public function read_mib_file_oid ($filename=false) {
         if($filename!==false)   { $this->mib_file_name = $filename; }
-        // we only allow .txt and .my
-        if (strpos($filename, ".txt")!==false || strpos($filename, ".my")!==false || strpos($filename, ".mib")!==false) {
+        // we only allow .txt, .my and -MIB
+        if (strpos($filename, ".txt")!==false || strpos($filename, ".my")!==false || strpos($filename, ".mib")!==false || strpos($entry, "-MIB")!==false) {
             // read file and put it to array
             $file_h = fopen($this->mib_file_name,"r");
             if (filesize($this->mib_file_name)>0) {
